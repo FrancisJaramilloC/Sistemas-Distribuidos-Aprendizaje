@@ -1,11 +1,11 @@
 import time
 import os
 
-DIR_COMUNICACION = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'carpeta_comunicacion')
+DIR_COMUNICACION = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'archivos_comunicacion')
 os.makedirs(DIR_COMUNICACION, exist_ok=True)
 
-ENTRADA_FILE = os.path.join(DIR_COMUNICACION, 'entrada_texto.txt')
-SALIDA_FILE = os.path.join(DIR_COMUNICACION, 'salida_invertida.txt')
+ENTRADA_FILE = os.path.join(DIR_COMUNICACION, 'entrada_servidor.txt')
+SALIDA_FILE = os.path.join(DIR_COMUNICACION, 'salida_servidor.txt')
 
 def main():
     print("Cliente Iniciado ")
@@ -33,7 +33,7 @@ def main():
                     respuesta = f.read().strip()
                 print(f"Respuesta del servidor: {respuesta}\n")
             else:
-                print("El servidor no ha respondido porfa corre el servidor\n")
+                print("El servidor no ha respondido, corre el servidor\n")
 
         except Exception as e:
             print(f"Ocurrió un error en el cliente: {e}")
