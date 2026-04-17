@@ -2,11 +2,11 @@ import time
 import os
 
 
-DIR_COMUNICACION = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'archivos_comunicacion')
+DIR_COMUNICACION = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'carpeta_comunicacion')
 os.makedirs(DIR_COMUNICACION, exist_ok=True)
 
-ENTRADA_FILE = os.path.join(DIR_COMUNICACION, 'entrada_servidor.txt')
-SALIDA_FILE = os.path.join(DIR_COMUNICACION, 'salida_servidor.txt')
+ENTRADA_FILE = os.path.join(DIR_COMUNICACION, 'entrada_texto.txt')
+SALIDA_FILE = os.path.join(DIR_COMUNICACION, 'salida_modificada.txt')
 
 def procesar_mensaje(mensaje):
     return mensaje.upper()[::-1]
