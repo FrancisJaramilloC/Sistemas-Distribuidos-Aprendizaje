@@ -4,7 +4,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s') 
 
 boletos_vendidos = 0 #boleto iniciado en 0
-#NxM = 5 000 000
+#NxM = 5 000 000    
 N_HILOS = 5
 M_VENTAS = 1_000_000
 mutex = threading.Lock()
