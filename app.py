@@ -18,8 +18,7 @@ def index():
 
 @app.route('/stream/<int:ejercicio>/<tipo>')
 def stream_ejercicio(ejercicio, tipo):
-    tipos_validos = ('algoritmo', 'secuencial', 'concurrente')
-    if ejercicio not in ARCHIVOS or tipo not in tipos_validos:
+    if ejercicio not in ARCHIVOS or tipo not in ('algoritmo', 'secuencial'):
         return Response("data: Error: Ruta no válida\n\n", mimetype='text/event-stream')
     
     info = ARCHIVOS[ejercicio]

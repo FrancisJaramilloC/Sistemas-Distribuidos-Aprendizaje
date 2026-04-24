@@ -56,13 +56,17 @@ if __name__ == "__main__":
     t_panadero = threading.Thread(target=panadero)
     t_cliente = threading.Thread(target=cliente)
 
+    inicio = time.time()
     t_panadero.start()
     t_cliente.start()
 
     t_panadero.join()
     t_cliente.join()
+    tiempo = time.time() - inicio
     
     es_secuencia_correcta = (panes_horneados_historial == panes_comprados_historial)
     logging.info(f"Total Horneados: {len(panes_horneados_historial)} | Total Comprados: {len(panes_comprados_historial)}")
     logging.info(f"Los panes fueron consumidos en orden?: {es_secuencia_correcta}")
     assert es_secuencia_correcta, "Error de completitud o secuencia."
+    logging.info(f"Tiempo: {tiempo:.4f}s")
+

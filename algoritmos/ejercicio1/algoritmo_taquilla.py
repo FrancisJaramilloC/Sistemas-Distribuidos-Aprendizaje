@@ -1,5 +1,6 @@
 import threading
 import logging
+import time
 
 logging.basicConfig(level=logging.INFO, format='%(message)s') 
 
@@ -16,6 +17,7 @@ def ejecutar_venta():
             boletos_vendidos += 1
 
 if __name__ == "__main__":
+    inicio = time.time()
     for iteracion in range(1, 11): #10 iteraciones sin variacion
         boletos_vendidos = 0
         hilos = []
@@ -29,3 +31,5 @@ if __name__ == "__main__":
             t.join()
 
         logging.info("Iteración %d - Ventas Totales: %d", iteracion, boletos_vendidos)
+    tiempo = time.time() - inicio
+    logging.info(f"Tiempo: {tiempo:.4f}s")

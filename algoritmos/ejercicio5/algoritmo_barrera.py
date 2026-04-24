@@ -51,6 +51,7 @@ def tarea_hilo(id_hilo):
 if __name__ == "__main__":
     hilos = []
     
+    inicio = time.time()
     #inicia hilos
     for i in range(1, N_TOTAL + 1):
         t = threading.Thread(target=tarea_hilo, args=(i,))
@@ -59,5 +60,8 @@ if __name__ == "__main__":
 
     for t in hilos:
         t.join()
+    tiempo = time.time() - inicio
         
     logging.info("Ningún hilo inició la fase 2 antes de que todos completaran la fase 1")
+    logging.info(f"Tiempo: {tiempo:.4f}s")
+

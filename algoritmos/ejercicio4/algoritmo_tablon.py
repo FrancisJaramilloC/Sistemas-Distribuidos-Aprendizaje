@@ -70,6 +70,7 @@ def escritor(id_escritor):
 if __name__ == "__main__":
     hilos = []
     
+    inicio = time.time()
     #llegada de lectores
     for i in range(1, 4):
         t = threading.Thread(target=lector, args=(i,))
@@ -91,6 +92,9 @@ if __name__ == "__main__":
 
     for t in hilos:
         t.join()
+    tiempo = time.time() - inicio
         
     logging.info("Validación Assert completada")
     logging.info("El log evidencia el patrón de acceso correcto")
+    logging.info(f"Tiempo: {tiempo:.4f}s")
+

@@ -55,6 +55,7 @@ if __name__ == "__main__":
     N_ATLETAS = 10
     hilos = []
     
+    inicio = time.time()
     for i in range(1, N_ATLETAS + 1):
         t = threading.Thread(target=atleta, args=(i,))
         hilos.append(t)
@@ -62,6 +63,9 @@ if __name__ == "__main__":
 
     for t in hilos:
         t.join()
+    tiempo = time.time() - inicio
     
     logging.info(f"Valor máximo de resources_in_use alcanzado: {max_resources_in_use}")
     assert max_resources_in_use <= 3, "El valor superó 3, el semáforo falló."
+    logging.info(f"Tiempo: {tiempo:.4f}s")
+

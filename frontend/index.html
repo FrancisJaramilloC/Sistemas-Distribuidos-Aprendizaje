@@ -57,7 +57,6 @@
             <div class="btns">
                 <button onclick="run(1, 'algoritmo')">Algoritmo</button>
                 <button onclick="run(1, 'secuencial')">Secuencial</button>
-                <button onclick="run(1, 'concurrente')">Concurrente</button>
             </div>
             <pre id="output-1"></pre>
         </div>
@@ -68,7 +67,6 @@
             <div class="btns">
                 <button onclick="run(2, 'algoritmo')">Algoritmo</button>
                 <button onclick="run(2, 'secuencial')">Secuencial</button>
-                <button onclick="run(2, 'concurrente')">Concurrente</button>
             </div>
             <pre id="output-2"></pre>
         </div>
@@ -79,7 +77,6 @@
             <div class="btns">
                 <button onclick="run(3, 'algoritmo')">Algoritmo</button>
                 <button onclick="run(3, 'secuencial')">Secuencial</button>
-                <button onclick="run(3, 'concurrente')">Concurrente</button>
             </div>
             <pre id="output-3"></pre>
         </div>
@@ -90,7 +87,6 @@
             <div class="btns">
                 <button onclick="run(4, 'algoritmo')">Algoritmo</button>
                 <button onclick="run(4, 'secuencial')">Secuencial</button>
-                <button onclick="run(4, 'concurrente')">Concurrente</button>
             </div>
             <pre id="output-4"></pre>
         </div>
@@ -101,7 +97,6 @@
             <div class="btns">
                 <button onclick="run(5, 'algoritmo')">Algoritmo</button>
                 <button onclick="run(5, 'secuencial')">Secuencial</button>
-                <button onclick="run(5, 'concurrente')">Concurrente</button>
             </div>
             <pre id="output-5"></pre>
         </div>
@@ -116,7 +111,6 @@
             
             if (eventSource) eventSource.close();
 
-            // Ocultar todas las terminales y mostrar solo la del ejercicio actual
             document.querySelectorAll('pre').forEach(p => p.style.display = 'none');
             out.style.display = 'block';
             out.innerText = '';
