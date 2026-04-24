@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response
 import subprocess
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='frontend')
 
 @app.route('/')
 def index():
@@ -21,7 +21,7 @@ def stream_ejercicio(ejercicio):
     if ejercicio not in archivos:
         return Response("data: Error: Ejercicio no encontrado\n\n", mimetype='text/event-stream')
         
-    script_path = os.path.join('src', archivos[ejercicio])
+    script_path = os.path.join('algoritmos', archivos[ejercicio])
     
     if not os.path.exists(script_path):
         return Response(f"data: Error: Archivo no encontrado: {script_path}\n\n", mimetype='text/event-stream')
