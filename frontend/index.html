@@ -10,91 +10,132 @@
             background: #fdfdfd;
             color: #333;
         }
-        .container { 
-            max-width: 800px; 
-            margin: auto; 
-        }
-        .buttons { 
+        .container { max-width: 850px; margin: auto; }
+        .ejercicio { 
             margin-bottom: 20px; 
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            padding: 15px; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 6px; 
+            background: #fff;
         }
+        .ejercicio h3 { margin: 0 0 8px 0; }
+        .ejercicio p { margin: 0 0 10px 0; color: #555; font-size: 14px; }
+        .btns { display: flex; gap: 8px; }
         button { 
-            padding: 10px 15px; 
+            padding: 8px 14px; 
             cursor: pointer; 
             background: #e2e8f0;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 13px;
         }
-        button:hover {
-            background: #cbd5e1;
-        }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        button:hover { background: #cbd5e1; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
         pre { 
             background: #1e1e1e; 
             color: #4ade80;
-            padding: 20px; 
+            padding: 15px; 
             border: 1px solid #000; 
             border-radius: 4px;
-            min-height: 300px; 
-            max-height: 500px;
+            max-height: 300px;
             overflow-y: auto; 
             font-family: Consolas, monospace;
+            font-size: 13px;
             white-space: pre-wrap;
+            margin-top: 12px;
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Simulador de Ejercicios</h1>
-        <p>Selecciona un ejercicio para ejecutarlo y ver su salida en pantalla en tiempo real (como en la terminal).</p>
         
-        <div class="buttons" id="btn-container">
-            <button onclick="run(1)">Ejercicio 1 (Mutex)</button>
-            <button onclick="run(2)">Ejercicio 2 (Semáforos)</button>
-            <button onclick="run(3)">Ejercicio 3 (Prod-Cons)</button>
-            <button onclick="run(4)">Ejercicio 4 (Lectores-Esc.)</button>
-            <button onclick="run(5)">Ejercicio 5 (Barrera)</button>
+        <div class="ejercicio">
+            <h3>Ejercicio 1 - La Taquilla (Mutex)</h3>
+            <p>Exclusión mutua para evitar sobreventa de boletos</p>
+            <div class="btns">
+                <button onclick="run(1, 'algoritmo')">Algoritmo</button>
+                <button onclick="run(1, 'secuencial')">Secuencial</button>
+                <button onclick="run(1, 'concurrente')">Concurrente</button>
+            </div>
+            <pre id="output-1"></pre>
         </div>
         
-        <pre id="output">Esperando ejecución...</pre>
+        <div class="ejercicio">
+            <h3>Ejercicio 2 - Gimnasio (Semáforos)</h3>
+            <p>Control de acceso a 3 máquinas con semáforo de conteo</p>
+            <div class="btns">
+                <button onclick="run(2, 'algoritmo')">Algoritmo</button>
+                <button onclick="run(2, 'secuencial')">Secuencial</button>
+                <button onclick="run(2, 'concurrente')">Concurrente</button>
+            </div>
+            <pre id="output-2"></pre>
+        </div>
+        
+        <div class="ejercicio">
+            <h3>Ejercicio 3 - Panadería (Productor-Consumidor)</h3>
+            <p>Buffer circular con dos semáforos y un mutex</p>
+            <div class="btns">
+                <button onclick="run(3, 'algoritmo')">Algoritmo</button>
+                <button onclick="run(3, 'secuencial')">Secuencial</button>
+                <button onclick="run(3, 'concurrente')">Concurrente</button>
+            </div>
+            <pre id="output-3"></pre>
+        </div>
+        
+        <div class="ejercicio">
+            <h3>Ejercicio 4 - Tablón de Notas (Lectores-Escritores)</h3>
+            <p>Lectura concurrente y escritura exclusiva con torniquete</p>
+            <div class="btns">
+                <button onclick="run(4, 'algoritmo')">Algoritmo</button>
+                <button onclick="run(4, 'secuencial')">Secuencial</button>
+                <button onclick="run(4, 'concurrente')">Concurrente</button>
+            </div>
+            <pre id="output-4"></pre>
+        </div>
+        
+        <div class="ejercicio">
+            <h3>Ejercicio 5 - Sincronización (Barrera)</h3>
+            <p>Variables de condición para sincronizar fases</p>
+            <div class="btns">
+                <button onclick="run(5, 'algoritmo')">Algoritmo</button>
+                <button onclick="run(5, 'secuencial')">Secuencial</button>
+                <button onclick="run(5, 'concurrente')">Concurrente</button>
+            </div>
+            <pre id="output-5"></pre>
+        </div>
     </div>
 
     <script>
         let eventSource = null;
 
-        function run(id) {
-            const out = document.getElementById('output');
+        function run(id, tipo) {
+            const out = document.getElementById(`output-${id}`);
             const btns = document.querySelectorAll('button');
             
-            // Si había un proceso corriendo, cerrarlo
-            if (eventSource) {
-                eventSource.close();
-            }
+            if (eventSource) eventSource.close();
+
+            // Ocultar todas las terminales y mostrar solo la del ejercicio actual
+            document.querySelectorAll('pre').forEach(p => p.style.display = 'none');
+            out.style.display = 'block';
+            out.innerText = '';
 
             btns.forEach(b => b.disabled = true);
-            out.innerText = `> Ejecutando python ejercicio${id}...\n\n`;
 
-            // Server-Sent Events (SSE) para stream en tiempo real
-            eventSource = new EventSource(`/stream/${id}`);
+            eventSource = new EventSource(`/stream/${id}/${tipo}`);
 
             eventSource.onmessage = function(event) {
-                if (event.data === "[FIN_EJECUCION]") {
+                if (event.data === "[FIN]") {
                     eventSource.close();
                     btns.forEach(b => b.disabled = false);
                 } else {
                     out.innerText += event.data + '\n';
-                    out.scrollTop = out.scrollHeight; // Auto-scroll hacia abajo
+                    out.scrollTop = out.scrollHeight;
                 }
             };
 
             eventSource.onerror = function() {
-                out.innerText += '\n[Fin del flujo de la terminal]';
                 eventSource.close();
                 btns.forEach(b => b.disabled = false);
             };

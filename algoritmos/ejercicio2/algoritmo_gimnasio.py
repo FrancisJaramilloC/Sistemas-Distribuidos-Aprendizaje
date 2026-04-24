@@ -3,7 +3,7 @@ import logging
 import time
 import random
 
-logging.basicConfig(level=logging.INFO, format='%(message)s') 
+logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 class MiSemaforo:
     #se crea el semaforo
@@ -30,11 +30,9 @@ class MiSemaforo:
 #semaforo limitado a 3
 semaforo = MiSemaforo(3)
 
-
 resources_in_use = 0 
 max_resources_in_use = 0 #variable que nunca superara a 3
 monitoreo_cerrojo = threading.Lock() #monitorear la maquina
-
 
 def atleta(id_atleta):
     global resources_in_use, max_resources_in_use

@@ -3,7 +3,7 @@ import logging
 import time
 import random
 
-logging.basicConfig(level=logging.INFO, format='%(message)s') #logs del programa
+logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 #semaforos y Mutex
 CAPACIDAD = 10
@@ -25,7 +25,7 @@ panes_comprados_historial = []
 def panadero():
     global indice_insertar
     for i in range(1, TOTAL_A_PRODUCIR + 1):
-        pan = f"Pan-{i}" # Hornear pan
+        pan = f"Pan-{i}"
         espacios_vacios.acquire() #esperar
 
         with mutex_vitrina: #mutex (bloquear/desbloquear)
@@ -50,11 +50,9 @@ def cliente():
             indice_sacar = (indice_sacar + 1) % CAPACIDAD 
             
         espacios_vacios.release() #incrementar espacios_vacios
-        time.sleep(random.uniform(0.05, 0.1)) # El cliente come más lento
-
+        time.sleep(random.uniform(0.05, 0.1))
 
 if __name__ == "__main__":
-    
     t_panadero = threading.Thread(target=panadero)
     t_cliente = threading.Thread(target=cliente)
 

@@ -8,10 +8,10 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 contador = 0 
 N_TOTAL = 5 
 mtx_barrera = threading.Lock() #mutex protege el acceso al contador
-var_cond_barrera = threading.Condition(mtx_barrera) #mutex donde los hilos esperan
+var_cond_barrera = threading.Condition(mtx_barrera) #donde los hilos esperan
 
 hilos_fase1_terminada = 0 
-verificacion_lock = threading.Lock() #verificador de orden
+verificacion_lock = threading.Lock()
 
 def llegar_a_barrera(id_hilo):
     global contador
