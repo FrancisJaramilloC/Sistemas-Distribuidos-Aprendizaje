@@ -94,7 +94,5 @@ if __name__ == "__main__":
         t.join()
     tiempo = time.time() - inicio
         
-    logging.info("Validación Assert completada")
-    logging.info("El log evidencia el patrón de acceso correcto")
     logging.info(f"Tiempo: {tiempo:.4f}s")
 
